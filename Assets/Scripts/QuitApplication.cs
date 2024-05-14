@@ -14,8 +14,6 @@ public class QuitApplication : MonoBehaviour
     void Update()
     {
         ActivateQuitApplication();
-
-
 	}
 
     void ActivateQuitApplication()

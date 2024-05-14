@@ -16,7 +16,7 @@ public class CollisionHandler : MonoBehaviour
 
 	[SerializeField] ParticleSystem successParticles;
 
-	bool isTransitioning = false;
+	public bool isTransitioning = false;
 	bool collisionDisabled = false;
 
 	//Fragment
@@ -30,26 +30,29 @@ public class CollisionHandler : MonoBehaviour
 
 	private GameObject fractObj;
 
-
-	void Start()
+    void Start()
 	{
-		AudioSource[] audioSources = GetComponents<AudioSource>();
+        AudioSource[] audioSources = GetComponents<AudioSource>();
 		audioSourceMainEngine = audioSources[0];
 		audioSourceBackgroundEngine = audioSources[1];
 		audioSourceCrash = audioSources[2];
 		audioSourceSuccess = audioSources[3];
 		audioSourceEngineRelease = audioSources[4];
-
 	}
 
 	private void Update()
 	{
-		RespondToDebugKeys();
+        RespondToDebugKeys();
 
 		if (originalObject.transform.position.y > 1800)
 		{
 			StartSuccessSequence();
 		}
+
+		if(isTransitioning)
+		{
+			// stop le gaz quand on fini la course si on peut call movement
+        }
     }
 
 	void RespondToDebugKeys()
@@ -58,13 +61,21 @@ public class CollisionHandler : MonoBehaviour
 		{
 			LoadNextLevel();
 		}
-
-		else if (Input.GetKey(KeyCode.C))
+        else if (Input.GetKey(KeyCode.K))
+        {
+            ReloadLevel();
+        }
+        else if (Input.GetKey(KeyCode.C))
+        {
+            collisionDisabled = true;
+            Debug.Log("Collision OFF");
+        }
+		else if (Input.GetKey(KeyCode.V))
 		{
-			collisionDisabled = !collisionDisabled;
+			collisionDisabled = false;
+			Debug.Log("Collision ON");
 		}
-	}
-
+    }
 
 	private void OnCollisionEnter(Collision other)
 	{
@@ -85,8 +96,7 @@ public class CollisionHandler : MonoBehaviour
 	}
 
 	void StartCrashSequence() 
-	{
-		
+	{		
 			isTransitioning = true;
 			audioSourceBackgroundEngine.Stop();
 			audioSourceMainEngine.Stop();
@@ -113,8 +123,6 @@ public class CollisionHandler : MonoBehaviour
 
 		GetComponent<Movement>().enabled = false;
 		Invoke("LoadNextLevel", levelLoadDelaySuccess);
-		
-
 	}
 	
 	void LoadNextLevel()
@@ -127,7 +135,6 @@ public class CollisionHandler : MonoBehaviour
 		}
 		SceneManager.LoadScene(nextSceneIndex);
 	}
-
 
 	void ReloadLevel()
 	{
@@ -160,10 +167,7 @@ public class CollisionHandler : MonoBehaviour
 						rb.AddExplosionForce(Random.Range(explosionMinForce, explosionMaxForce), originalObject.transform.position, explosionForceRadius);
 
 						//StartCoroutine(Shrink(t,2));
-
-					}
-
-					
+					}				
  				}
 
 				if (explosionVFX != null)
@@ -171,11 +175,7 @@ public class CollisionHandler : MonoBehaviour
 					GameObject exploVFX = Instantiate(explosionVFX, originalObject.transform.position, originalObject.transform.rotation);
 					Destroy(exploVFX, 7);
 				}
-
 			}
-
-		}
-
-			
+		}		
 	}
 }

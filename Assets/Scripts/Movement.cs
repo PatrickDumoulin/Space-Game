@@ -7,27 +7,28 @@ using UnityEngine.SceneManagement;
 public class Movement : MonoBehaviour
 {
 	private float startTime;
-	[SerializeField] float mainThrust = 100000f;
-	[SerializeField] float rotationThrust = 1f;
+	[SerializeField] float mainThrust = 1000f;
+    [SerializeField] float boostThrust = 1100f;
+    [SerializeField] float rotationThrust = 150f;
 	[SerializeField] AudioClip mainEngine;
-	[SerializeField] AudioClip backgroundEngine;
+    [SerializeField] AudioClip backgroundEngine;
 	[SerializeField] AudioClip engineRelease;
 	[SerializeField] AudioClip leftEngineRotateStart;
 	[SerializeField] AudioClip leftEngineRotateStop;
 	[SerializeField] AudioClip rightEngineRotateStart;
 	[SerializeField] AudioClip rightEngineRotateStop;
-
+    [SerializeField] AudioClip boost;
 
 	Rigidbody rb;
 	
-
 	AudioSource audioSourceMainEngine;
-	AudioSource audioSourceBackgroundEngine;
+    AudioSource audioSourceBackgroundEngine;
 	AudioSource audioSourceEngineRelease;
 	AudioSource audioSourceLeftEngineRotateStart;
 	AudioSource audioSourceLeftEngineRotateStop;
 	AudioSource audioSourceRightEngineRotateStart;
 	AudioSource audioSourceRightEngineRotateStop;
+    AudioSource audioSourceBoost;
 
 	[SerializeField] ParticleSystem mainEngineParticles;
 	[SerializeField] ParticleSystem mainEngineParticles2;
@@ -51,14 +52,22 @@ public class Movement : MonoBehaviour
 		audioSourceLeftEngineRotateStop = audioSources[4];
 		audioSourceRightEngineRotateStart = audioSources[5];
 		audioSourceRightEngineRotateStop = audioSources[6];
+        audioSourceBoost = audioSources[7];
 
-	}
+    }
 
 	// Update is called once per frame
 	void Update()
 	{
-		StartEngine();
+        StartEngine();
+       
+        if (isEngineStarted)
+        {
+            ProcessThrust();
+            ProcessRotation();
+        }
 
+        /*        
 		if(currentScene == "TakeOff")
 		{
 			if (isEngineStarted && Time.time >= startTime + 20f)
@@ -72,16 +81,28 @@ public class Movement : MonoBehaviour
 			ProcessThrust();
 			ProcessRotation();
 		}
-
-		
-	}
+		*/
+    }
 
 	void StartEngine()
 	{
 		if (Input.GetKeyDown(KeyCode.E) && !isEngineStarted)
 		{
+			// Ajout pour enlever freeze au debut
+            rb.constraints = RigidbodyConstraints.FreezePosition;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+			StartLeftRotation();
+			StopLeftRotation();
+			StartRightRotation();
+			StopRightRotation();         
+            StartThrusting();
+			StopThrusting();
+			StartBoosting();
+			StopBoosting();
+            rb.constraints = RigidbodyConstraints.None;
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
 
-			if (!audioSourceBackgroundEngine.isPlaying)
+            if (!audioSourceBackgroundEngine.isPlaying)
 			{
 				isEngineStarted = true;
 				audioSourceBackgroundEngine.PlayOneShot(backgroundEngine);
@@ -90,41 +111,47 @@ public class Movement : MonoBehaviour
 
 	}
 
-	void ProcessThrust()
+    #region Thrust and Boost
+    void ProcessThrust()
 	{
-		if (Input.GetKey(KeyCode.Space))
+		if (Input.GetKey(KeyCode.W))
 		{
 			StartThrusting();
-		}
-		else if (Input.GetKeyUp(KeyCode.Space))
+			if (Input.GetKey(KeyCode.Space)) // ajout
+            {
+                StartBoosting();
+            }
+            else if (Input.GetKeyUp(KeyCode.Space))
+            {
+                StopBoosting();
+            }
+        }
+		else if (Input.GetKeyUp(KeyCode.W))
 		{
 			StopThrusting();
-		}
+            StopBoosting(); 
+        }
 	}
 
-	void ProcessRotation()
-	{
+    void StartBoosting() // ajout
+    {
+        rb.AddRelativeForce(Vector3.up * boostThrust * Time.deltaTime);
 
-		if (Input.GetKey(KeyCode.LeftArrow))
-		{
-			StartLeftRotation();
-		}
-		else if (Input.GetKeyUp(KeyCode.LeftArrow))
-		{
-			StopLeftRotation();
-		}
-		else if (Input.GetKey(KeyCode.RightArrow))
-		{
-			StartRightRotation();
-		}
-		else if (Input.GetKeyUp(KeyCode.RightArrow))
-		{
-			StopRightRotation();
-		}
+        if (!audioSourceBoost.isPlaying)
+        {
+            audioSourceBoost.Stop();
 
-	}
+            audioSourceBoost.PlayOneShot(boost,2f);
 
-	void StartThrusting()
+            // particules boost fumee peut etre
+        }
+    }
+    void StopBoosting() // ajout
+    {
+        audioSourceBoost.Stop();
+    }
+
+    void StartThrusting()
 	{
 		rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
 
@@ -137,13 +164,9 @@ public class Movement : MonoBehaviour
 			mainEngineParticles.Play();
 			mainEngineParticles2.Play();
 		}
-
-
-
-
 	}
 
-	void StopThrusting()
+	public void StopThrusting()
 	{
 		audioSourceMainEngine.Stop();
 
@@ -155,8 +178,32 @@ public class Movement : MonoBehaviour
 		mainEngineParticles.Stop();
 		mainEngineParticles2.Stop();
 	}
+	#endregion
 
-	private void StartRightRotation()
+    #region Rotations
+    void ProcessRotation()
+	{
+		if (Input.GetKey(KeyCode.A))
+		{
+            StopRightRotation(); // ajout
+            StartLeftRotation();
+		}
+		else if (Input.GetKeyUp(KeyCode.A))
+		{
+			StopLeftRotation();
+		}
+		else if (Input.GetKey(KeyCode.D))
+		{
+            StopLeftRotation(); // ajout
+            StartRightRotation();
+		}
+		else if (Input.GetKeyUp(KeyCode.D))
+		{
+			StopRightRotation();
+		}
+	}
+
+    private void StartRightRotation()
 	{
 		RotateRight();
 
@@ -173,7 +220,6 @@ public class Movement : MonoBehaviour
 			audioSourceLeftEngineRotateStart.PlayOneShot(leftEngineRotateStart);
 		}
 	}
-
 
 	private void StopRightRotation()
 	{
@@ -230,7 +276,6 @@ public class Movement : MonoBehaviour
 		ApplyRotation(rotationThrust);
 	}
 
-
 	private void RotateRight()
 	{
 		ApplyRotation(-rotationThrust);
@@ -241,7 +286,8 @@ public class Movement : MonoBehaviour
 		rb.freezeRotation = true; // freezing rotation so we can manually rotate
 		rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, 0f, rotationThisFrame * Time.deltaTime));
 		rb.freezeRotation = false; // unfreezing rotation so the physics system can take over
-	}
+        rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
+    }
+    #endregion
 
-	
 }
