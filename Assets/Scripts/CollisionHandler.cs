@@ -5,7 +5,7 @@ public class CollisionHandler : MonoBehaviour
 {
 	[SerializeField] AudioClip crash;
 	[SerializeField] AudioClip success;
-	float levelLoadDelayCrash = 15f;
+	float levelLoadDelayCrash = 8f;
 	float levelLoadDelaySuccess = 4f;
 
 	AudioSource audioSourceMainEngine;

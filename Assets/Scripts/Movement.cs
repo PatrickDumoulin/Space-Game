@@ -89,20 +89,24 @@ public class Movement : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.E) && !isEngineStarted)
 		{
 			// Ajout pour enlever freeze au debut
-            rb.constraints = RigidbodyConstraints.FreezePosition;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
+			rb.constraints = RigidbodyConstraints.FreezePosition;
+			rb.constraints = RigidbodyConstraints.FreezeRotation;
 			StartLeftRotation();
 			StopLeftRotation();
 			StartRightRotation();
-			StopRightRotation();         
-            StartThrusting();
+			StopRightRotation();
+			StartThrusting();
 			StopThrusting();
 			StartBoosting();
 			StopBoosting();
-            rb.constraints = RigidbodyConstraints.None;
-            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
 
-            if (!audioSourceBackgroundEngine.isPlaying)
+			rb.constraints = RigidbodyConstraints.None;
+			rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
+
+
+
+
+			if (!audioSourceBackgroundEngine.isPlaying)
 			{
 				isEngineStarted = true;
 				audioSourceBackgroundEngine.PlayOneShot(backgroundEngine);
