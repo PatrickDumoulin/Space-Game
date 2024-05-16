@@ -19,9 +19,5 @@ public class musicPlayer : MonoBehaviour
 		{
 			DontDestroyOnLoad(gameObject);
 		}
-
-
-
-
 	}
 }

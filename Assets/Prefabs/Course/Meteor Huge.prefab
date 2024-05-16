@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 5103248450415320972}
   - component: {fileID: 3693369691896379798}
   m_Layer: 0
-  m_Name: Meteor
+  m_Name: Meteor Huge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,8 +236,8 @@ Transform:
   m_GameObject: {fileID: 4110248137434643803}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.1569428, y: 4.495981, z: -6.1763453}
-  m_LocalScale: {x: 1.9369, y: 1.9369, z: 1.9369}
+  m_LocalPosition: {x: -2.1569, y: 4.495981, z: 0}
+  m_LocalScale: {x: 6.304263, y: 6.304263, z: 6.304263}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4087154733715830839}

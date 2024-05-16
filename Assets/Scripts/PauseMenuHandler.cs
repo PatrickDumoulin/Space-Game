@@ -8,6 +8,7 @@ public class PauseMenuHandler : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject PauseButton;
     public GameObject LevelSelection;
+    public GameObject Controls;
 
     private void Update()
     {
@@ -34,6 +35,7 @@ public class PauseMenuHandler : MonoBehaviour
         PauseMenu.SetActive(false);
         PauseButton.SetActive(true);
         LevelSelection.SetActive(false);
+        Controls.SetActive(false);
         Time.timeScale = 1;
     }
     public void QuitToMain()

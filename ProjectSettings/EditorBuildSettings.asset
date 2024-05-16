@@ -18,10 +18,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Level3.unity
     guid: ea41411211cc71f4a8727b76d153d181
   - enabled: 0
-    path: Assets/Scenes/Lvl 1.unity
+    path: Assets/Scenes/Tests/Lvl 1.unity
     guid: 3297d4f393f23584b8f90aca99517c0d
   - enabled: 0
-    path: Assets/Scenes/TakeOff.unity
+    path: Assets/Scenes/Tests/TakeOff.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 0
     path: Assets/Scenes/PauseMenu.unity

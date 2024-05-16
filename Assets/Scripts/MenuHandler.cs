@@ -19,6 +19,10 @@ public class MenuHandler : MonoBehaviour
 
     public void LoadSelectedLevel(int levelIndex)
     {
+        if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
         SceneManager.LoadScene(levelIndex);
     }
 
