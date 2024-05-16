@@ -88,20 +88,20 @@ public class Movement : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.E) && !isEngineStarted)
 		{
-			// Ajout pour enlever freeze au debut
-			rb.constraints = RigidbodyConstraints.FreezePosition;
-			rb.constraints = RigidbodyConstraints.FreezeRotation;
-			StartLeftRotation();
-			StopLeftRotation();
-			StartRightRotation();
-			StopRightRotation();
-			StartThrusting();
-			StopThrusting();
-			StartBoosting();
-			StopBoosting();
+			//// Ajout pour enlever freeze au debut
+			//rb.constraints = RigidbodyConstraints.FreezePosition;
+			//rb.constraints = RigidbodyConstraints.FreezeRotation;
+			//StartLeftRotation();
+			//StopLeftRotation();
+			//StartRightRotation();
+			//StopRightRotation();
+			//StartThrusting();
+			//StopThrusting();
+			//StartBoosting();
+			//StopBoosting();
 
-			rb.constraints = RigidbodyConstraints.None;
-			rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
+			//rb.constraints = RigidbodyConstraints.None;
+			//rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
 
 
 
