@@ -107,7 +107,7 @@ public class CollisionHandler : MonoBehaviour
         {
             Debug.Log(Crystal.ToString());
             Crystal++;
-            scoreText.text = "Score: " + (Crystal * 100).ToString();
+            scoreText.text = "Score: " + (Crystal * 500).ToString();
             Destroy(other.gameObject);
         }
     }
