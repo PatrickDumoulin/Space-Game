@@ -9,7 +9,7 @@ public class CollisionHandler : MonoBehaviour
 	[SerializeField] AudioClip CrystalPickup;
 
     float levelLoadDelayCrash = 8f;
-	float levelLoadDelaySuccess = 4f;
+	float levelLoadDelaySuccess = 3f;
 
 	AudioSource audioSourceMainEngine;
 	AudioSource audioSourceBackgroundEngine;
@@ -144,7 +144,8 @@ public class CollisionHandler : MonoBehaviour
 		successParticles.Play();
 
 		GetComponent<Movement>().enabled = false;
-		Invoke("LoadNextLevel", levelLoadDelaySuccess);
+		GetComponent<Rigidbody>().freezeRotation = true;
+        Invoke("LoadNextLevel", levelLoadDelaySuccess);
 	}
 	
 	void LoadNextLevel()
