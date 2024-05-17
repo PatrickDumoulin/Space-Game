@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,6 +30,10 @@ public class CollisionHandler : MonoBehaviour
 	public float fragScaleFactor = 1;
 
 	private GameObject fractObj;
+
+    // Crystal Copllection
+    private int Crystal = 0;
+    public TextMeshProUGUI scoreText;
 
     void Start()
 	{
@@ -89,11 +94,23 @@ public class CollisionHandler : MonoBehaviour
 			case "Finish":
 				StartSuccessSequence();
 				break;
-			default:
+            default:
 				StartCrashSequence();
 				break;
 		}
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+		// Collect crystals
+        if(other.transform.tag == "Crystal")
+        {
+            Debug.Log(Crystal.ToString());
+            Crystal++;
+            scoreText.text = "Score: " + (Crystal * 100).ToString();
+            Destroy(other.gameObject);
+        }
+    }
 
 	void StartCrashSequence() 
 	{		

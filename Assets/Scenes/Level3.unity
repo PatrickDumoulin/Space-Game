@@ -4349,6 +4349,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2149169298321033621, guid: f7d488a3cb2212741904c577e6286e1d, type: 3}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 1026509708}
     - target: {fileID: 6260469431782152685, guid: f7d488a3cb2212741904c577e6286e1d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.010009766
@@ -8321,7 +8325,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 253260502154956846, guid: eeaa2af919a7f5e4e9319166f09731ed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.4613214
+      value: -4.4625154
       objectReference: {fileID: 0}
     - target: {fileID: 253260502154956846, guid: eeaa2af919a7f5e4e9319166f09731ed, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8373,7 +8377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4250868232240464638, guid: eeaa2af919a7f5e4e9319166f09731ed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.4613214
+      value: -4.4625154
       objectReference: {fileID: 0}
     - target: {fileID: 4250868232240464638, guid: eeaa2af919a7f5e4e9319166f09731ed, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8478,9 +8482,9 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1427710720}
   - {fileID: 1261584823}
+  - {fileID: 1427710720}
   - {fileID: 4000118437115534737}
-  - {fileID: 1243971181}
   - {fileID: 1610347259}
+  - {fileID: 1243971181}
   - {fileID: 645060247}

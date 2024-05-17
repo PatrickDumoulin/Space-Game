@@ -1613,10 +1613,10 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 605016237}
-  - {fileID: 1801107074}
-  - {fileID: 1692434317}
-  - {fileID: 486243574}
-  - {fileID: 9157146033308336517}
   - {fileID: 332589873}
+  - {fileID: 1801107074}
+  - {fileID: 605016237}
+  - {fileID: 9157146033308336517}
+  - {fileID: 486243574}
+  - {fileID: 1692434317}
   - {fileID: 661481704}
