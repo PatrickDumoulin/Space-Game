@@ -5,17 +5,20 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
 	[SerializeField] AudioClip crash;
-	[SerializeField] AudioClip success;
-	float levelLoadDelayCrash = 8f;
+	[SerializeField] AudioClip success; 
+	[SerializeField] AudioClip CrystalPickup;
+
+    float levelLoadDelayCrash = 8f;
 	float levelLoadDelaySuccess = 4f;
 
 	AudioSource audioSourceMainEngine;
 	AudioSource audioSourceBackgroundEngine;
 	AudioSource audioSourceCrash;
 	AudioSource audioSourceSuccess;
-	AudioSource audioSourceEngineRelease;
+	AudioSource audioSourceEngineRelease; 
+	AudioSource audioSourceCrystalPickup;
 
-	[SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem successParticles;
 
 	public bool isTransitioning = false;
 	bool collisionDisabled = false;
@@ -43,7 +46,8 @@ public class CollisionHandler : MonoBehaviour
 		audioSourceCrash = audioSources[2];
 		audioSourceSuccess = audioSources[3];
 		audioSourceEngineRelease = audioSources[4];
-	}
+        audioSourceCrystalPickup = audioSources[10];
+    }
 
 	private void Update()
 	{
@@ -105,6 +109,7 @@ public class CollisionHandler : MonoBehaviour
 		// Collect crystals
         if(other.transform.tag == "Crystal")
         {
+			audioSourceCrystalPickup.PlayOneShot(CrystalPickup);
             Debug.Log(Crystal.ToString());
             Crystal++;
             scoreText.text = "Score: " + (Crystal * 500).ToString();
